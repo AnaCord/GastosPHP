@@ -1,4 +1,41 @@
 <?php
+include 'conexion.php';
+
+$error="";
+$hay_post = false;
+$nombre = "";
+$tipoGasto = "";
+$valorGasto = "";
+if(isset($_REQUEST['submit1'])){
+    $hay_post = true;
+    $nombre = isset($_REQUEST['txtNombre']) ? $_REQUEST['txtNombre'] : "";
+    $tipoGasto = isset($_REQUEST['radioTipo']) ? $_REQUEST['radioTipo'] : "";
+
+    $valorGasto = isset($_REQUEST['cmbGasto']) ? $_REQUEST['cmbGasto'] : "";
+
+
+    if(!empty($nombre)){
+        $nombre = preg_replace("/[^a-zA-ZáéíóúÁÉÍÓÚ]/u","",$nombre);
+    }
+    else{
+        $error .= "El nombre no puede esta vácio<br>";
+    }
+
+    if($tipoGasto == ""){
+        $error .= "Seleccione un sexo.<br>";
+    }
+
+    if($valorGasto ==""){
+        $error .= "Seleccione un país";
+    }
+
+}
+
+$stm = $conexion->prepare("select * from gastos");
+$stm->execute([]);
+$resultados = $stm->fetchAll();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -23,12 +60,13 @@
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
         <div class="mb-3">
-            <label class="form-label" for="pais">Tipo de Gasto</label>
-            <select class="form-select" name="cmbPais" id="pais">
+            <label class="form-label" for="tipoGasto">Tipo de Gasto</label>
+            <select class="form-select" name="radioTipo" id="tipoGasto">
                 <option value="">Seleccione que tipo de gasto es</option>
-                <option value="Honduras" <?php echo ($pais=='Honduras')? 'selected' : '' ?> >Alimentacion</option>
-                <option value="Guatemala" <?php echo ($pais=='Guatemala')? 'selected' : '' ?>>Transporte</option>
-                <option value="Mexico" <?php echo  ($pais=='Mexico')? 'selected' : '' ?>>Salud</option>
+                <option value="Alimentacion" <?php echo ($tipoGasto=='Alimentacion')? 'selected' : '' ?> >Alimentacion</option>
+                <option value="Salud" <?php echo ($tipoGasto=='Salud')? 'selected' : '' ?>>Salud</option>
+                <option value="Transporte" <?php echo  ($tipoGasto=='Transporte')? 'selected' : '' ?>>Transporte</option>
+                <option value="Cine" <?php echo  ($tipoGasto=='Cine')? 'selected' : '' ?>>Cine</option>
             </select><br>
         </div>
         <div class="mb-3">
@@ -39,6 +77,28 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 </div>
+
+<div class="container-sm">
+
+    <table class="table table-striped-columns">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Tipo de Gasto</th>
+            <th scope="col">Valor de Gasto</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        </tbody>
+    </table>
+
+</div>
+
+
+
 </body>
 
 </html>
