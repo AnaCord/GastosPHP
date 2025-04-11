@@ -145,7 +145,7 @@ foreach($resultados as $registro){
 
 <div class="container-sm">
     <!-- formulario -->
-    <form method="POST" action="ana.php">
+    <form method="POST" action="index.php">
         <div class="mb-3">
             <label for="txtNombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="txtNombre" name="txtNombre">
