@@ -1,20 +1,6 @@
 <?php
 include 'conexion.php';
 
-try {
-    $conexion = new PDO(
-            "mysql:dbname=u768712027_bdd_gastos; host=congresoicc.com",
-            "u768712027_userGastos",
-            "GastosProgramacionNegocios123456789."
-        );
-
-
-    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-} catch (PDOException $e) {
-    echo "Error de conexión: " . $e->getMessage();
-}
-
 $error="";
 $hay_post = false;
 $nombre = "";
@@ -119,6 +105,13 @@ $stm = $conexion->prepare("select * from gastos");
 $stm->execute([]);
 $resultados = $stm->fetchAll();
 
+// para total acumulado
+$totalGasto = 0;
+foreach($resultados as $registro){
+    $totalGasto += $registro['valorGasto'];
+}
+
+
 
 ?>
 
@@ -138,7 +131,7 @@ $resultados = $stm->fetchAll();
 
 <div class="container-sm">
     <!-- formulario -->
-    <form method="POST" action="index.php">
+    <form method="POST" action="ana.php">
         <div class="mb-3">
             <label for="txtNombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="txtNombre" name="txtNombre">
@@ -220,6 +213,14 @@ if(isset($_REQUEST['mensaje'])){
             <td><a class="btn btn-primary" href="index.php?id=<?php echo $registro['codigoGasto'] ?>&op=m">Modificar</a></td>
             <td><a class="btn btn-danger" href="index.php?id=<?php echo $registro['codigoGasto'] ?>&op=e" onclick="return confirm('Desea eliminar el registro');">Eliminar</a></td>
             <?php endforeach; ?>
+
+
+        </tr>
+
+        <tr class="table">
+            <td colspan="3"><strong>Total acumulado:</strong></td>
+            <td><strong><?php echo $totalGasto; ?></strong></td>
+            <td colspan="2"></td>
         </tr>
 
 
