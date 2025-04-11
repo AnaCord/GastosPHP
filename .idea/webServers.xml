@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="0b364fd2-c8a7-4d24-a3db-64ff07cddf9b" name="FTPAnaCordovaGastos" url="http://ftp.congresoicc.com">
+        <fileTransfer host="ftp.congresoicc.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

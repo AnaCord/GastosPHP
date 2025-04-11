@@ -1,6 +1,19 @@
 <?php
 include 'conexion.php';
 
+try {
+    $conexion = new PDO(
+        "mysql:host=127.0.0.1;port=3306;dbname=u768712027_bdd_gastos;charset=utf8",
+        "root",
+        ""
+    );
+
+    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+} catch (PDOException $e) {
+    echo "Error de conexión: " . $e->getMessage();
+}
+
 $error="";
 $hay_post = false;
 $nombre = "";
@@ -124,7 +137,7 @@ $resultados = $stm->fetchAll();
 
 <div class="container-sm">
     <!-- formulario -->
-    <form method="POST" action="ana.php">
+    <form method="POST" action="index.php">
         <div class="mb-3">
             <label for="txtNombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="txtNombre" name="txtNombre">
@@ -203,8 +216,8 @@ if(isset($_REQUEST['mensaje'])){
             <td><?php echo $registro['nombre']; ?></td>
             <td><?php echo $registro['tipoGasto']; ?></td>
             <td><?php echo $registro['valorGasto']; ?></td>
-            <td><a class="btn btn-primary" href="index.php?id=<?php echo $registro['codigoUsuario'] ?>&op=m">Modificar</a></td>
-            <td><a class="btn btn-danger" href="index.php?id=<?php echo $registro['codigoUsuario'] ?>&op=e" onclick="return confirm('Desea eliminar el registro');">Eliminar</a></td>
+            <td><a class="btn btn-primary" href="index.php?id=<?php echo $registro['codigoGasto'] ?>&op=m">Modificar</a></td>
+            <td><a class="btn btn-danger" href="index.php?id=<?php echo $registro['codigoGasto'] ?>&op=e" onclick="return confirm('Desea eliminar el registro');">Eliminar</a></td>
             <?php endforeach; ?>
         </tr>
 
